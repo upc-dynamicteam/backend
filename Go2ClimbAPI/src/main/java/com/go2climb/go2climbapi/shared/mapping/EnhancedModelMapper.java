@@ -1,9 +1,9 @@
 package com.go2climb.go2climbapi.shared.mapping;
 
-import org.modelmapper.ModelMapper;
-
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
 
 public class EnhancedModelMapper extends ModelMapper {
 
