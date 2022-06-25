@@ -1,8 +1,8 @@
 package com.go2climb.go2climbapi.mapping;
 
-import com.go2climb.go2climbapi.agency.mapping.AgencyMapper;
-import com.go2climb.go2climbapi.hiredServices.mapping.HiredServiceMapper;
-import com.go2climb.go2climbapi.tourist.mapping.TouristMapper;
+import com.go2climb.go2climbapi.application.agency.mapping.AgencyMapper;
+import com.go2climb.go2climbapi.application.hiredServices.mapping.HiredServiceMapper;
+import com.go2climb.go2climbapi.application.tourist.mapping.TouristMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

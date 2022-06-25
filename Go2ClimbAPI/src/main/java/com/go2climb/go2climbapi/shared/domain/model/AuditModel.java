@@ -21,6 +21,8 @@ public abstract class AuditModel {
     @CreatedDate
     private Date createdAt;
 
-    @Column(name = "updated_at", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at", nullable = false, updatable = false)
+    @CreatedDate
     private Date updatedAt;
 }
