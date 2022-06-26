@@ -25,26 +25,26 @@ public class AgencyServiceController {
 
     //funciona
     @GetMapping
-    public Page<ServiceResource> getAllServicesByAgencyId(Long agencyId, Pageable pageable) {
+    public Page<ServiceResource> getAllServicesByAgencyId(@PathVariable Long agencyId, Pageable pageable) {
         return mapper.modelListPage(serviceService.getAllByAgencyId(agencyId), pageable);
     }
 
     //funciona
     @PostMapping
-    public ServiceResource createService(Long agencyId, @RequestBody CreateServiceResource resource) {
+    public ServiceResource createService(@PathVariable Long agencyId, @RequestBody CreateServiceResource resource) {
         return mapper.toResource(serviceService.create(agencyId, mapper.toModel(resource)));
     }
 
     //funciona
     @PutMapping("{serviceId}")
     public ServiceResource updateService(@PathVariable Long serviceId,
-                                         Long agencyId, UpdateServiceResource resource) {
+                                         @PathVariable Long agencyId, UpdateServiceResource resource) {
         return mapper.toResource(serviceService.update(agencyId, serviceId, mapper.toModel(resource)));
     }
 
     //funciona
     @DeleteMapping("{serviceId}")
-    public ResponseEntity<?> deleteService(Long agencyId, @PathVariable Long serviceId) {
+    public ResponseEntity<?> deleteService(@PathVariable Long agencyId, @PathVariable Long serviceId) {
         return serviceService.delete(agencyId, serviceId);
     }
 }

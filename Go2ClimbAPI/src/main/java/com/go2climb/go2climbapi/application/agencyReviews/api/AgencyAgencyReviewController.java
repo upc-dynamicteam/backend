@@ -24,7 +24,7 @@ public class AgencyAgencyReviewController {
     }
 
     @GetMapping
-    public Page<AgencyReviewResource> getAllByAgencyId(Long agencyId, Pageable pageable) {
+    public Page<AgencyReviewResource> getAllByAgencyId(@PathVariable Long agencyId, Pageable pageable) {
         return mapper.modelListPage(agencyReviewService.getAllByAgencyId(agencyId), pageable);
     }
 

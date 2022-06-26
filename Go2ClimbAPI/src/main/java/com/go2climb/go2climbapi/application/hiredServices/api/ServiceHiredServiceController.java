@@ -25,7 +25,7 @@ public class ServiceHiredServiceController {
     }
 
     @GetMapping
-    public Page<HiredServiceResource> getAllByServiceId(Long serviceId, Pageable pageable) {
+    public Page<HiredServiceResource> getAllByServiceId(@PathVariable Long serviceId, Pageable pageable) {
         return mapper.modelListPage(hiredServiceService.getAllByServiceId(serviceId), pageable);
     }
 

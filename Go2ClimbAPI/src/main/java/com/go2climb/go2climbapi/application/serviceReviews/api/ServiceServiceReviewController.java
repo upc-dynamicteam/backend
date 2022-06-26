@@ -25,7 +25,7 @@ public class ServiceServiceReviewController {
 
 
     @GetMapping
-    public Page<ServiceReviewResource> getAllByServiceId(Long serviceId, Pageable pageable) {
+    public Page<ServiceReviewResource> getAllByServiceId(@PathVariable Long serviceId, Pageable pageable) {
         return mapper.modelListPage(serviceReviewService.getAllByServiceId(serviceId), pageable);
     }
 
