@@ -15,6 +15,12 @@ public interface ServiceService {
 
     List<Service> getAllByAgencyId(Long agencyId);
 
+    List<Service> getAllByIsOffer(int isOffer);
+
+    List<Service> getAllByIsPopular(int isPopular);
+
+    List<Service> getAllByText(String text);
+
     Page<Service> getAllByAgencyId(Long agencyId, Pageable pageable);
 
     Service create(Long agencyId, Service service);

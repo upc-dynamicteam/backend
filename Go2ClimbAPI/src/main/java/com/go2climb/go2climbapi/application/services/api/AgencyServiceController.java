@@ -2,6 +2,7 @@ package com.go2climb.go2climbapi.application.services.api;
 
 import com.go2climb.go2climbapi.application.services.domain.service.ServiceService;
 import com.go2climb.go2climbapi.application.services.mapping.ServiceMapper;
+import com.go2climb.go2climbapi.application.services.resource.CreateServiceResource;
 import com.go2climb.go2climbapi.application.services.resource.ServiceResource;
 import com.go2climb.go2climbapi.application.services.resource.UpdateServiceResource;
 import org.springframework.data.domain.Page;
@@ -30,7 +31,7 @@ public class AgencyServiceController {
 
     //funciona
     @PostMapping
-    public ServiceResource createService(Long agencyId, @RequestBody UpdateServiceResource resource) {
+    public ServiceResource createService(Long agencyId, @RequestBody CreateServiceResource resource) {
         return mapper.toResource(serviceService.create(agencyId, mapper.toModel(resource)));
     }
 

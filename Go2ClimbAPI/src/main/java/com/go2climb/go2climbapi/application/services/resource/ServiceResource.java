@@ -1,6 +1,6 @@
 package com.go2climb.go2climbapi.application.services.resource;
 
-import com.go2climb.go2climbapi.application.agency.resource.AgencyResource;
+import com.go2climb.go2climbapi.application.agencies.resource.AgencyResource;
 import lombok.*;
 
 @Getter

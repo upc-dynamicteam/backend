@@ -4,6 +4,7 @@ import com.go2climb.go2climbapi.application.services.domain.model.entity.Service
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,4 +19,12 @@ public interface ServiceRepository extends JpaRepository<Service, Long> {
 
     Page<Service> findByAgencyId(Long agencyId, Pageable pageable);
 
+    @Query("SELECT u FROM Service u WHERE u.isOffer = ?1")
+    List<Service> findByIsOffer(int isOffer);
+
+    @Query("SELECT u FROM Service u WHERE u.isPopular = ?1")
+    List<Service> findByIsPopular(int isPopular);
+
+    @Query("SELECT u FROM Service u WHERE u.name LIKE %?1%")
+    List<Service> findByText(String text);
 }

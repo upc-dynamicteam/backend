@@ -29,6 +29,22 @@ public class ServiceController {
         return mapper.modelListPage(serviceService.getAll(), pageable);
     }
 
+    @GetMapping("isOffer={isOffer}")
+    public Page<ServiceResource> getAllByIsOffer(@PathVariable int isOffer, Pageable pageable) {
+        System.out.print("s");
+        return mapper.modelListPage(serviceService.getAllByIsOffer(isOffer), pageable);
+    }
+
+    @GetMapping("isPopular={isPopular}")
+    public Page<ServiceResource> getAllByIsPopular(@PathVariable int isPopular, Pageable pageable) {
+        return mapper.modelListPage(serviceService.getAllByIsPopular(isPopular), pageable);
+    }
+
+    @GetMapping("name_like={text}")
+    public Page<ServiceResource> getAllByText(@PathVariable String text, Pageable pageable) {
+        return mapper.modelListPage(serviceService.getAllByText(text), pageable);
+    }
+
     //funciona
     @GetMapping("{serviceId}")
     public ServiceResource getById (@PathVariable Long serviceId) {

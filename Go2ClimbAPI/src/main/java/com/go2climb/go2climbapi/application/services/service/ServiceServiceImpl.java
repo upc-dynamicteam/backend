@@ -1,6 +1,6 @@
 package com.go2climb.go2climbapi.application.services.service;
 
-import com.go2climb.go2climbapi.application.agency.domain.persistence.AgencyRepository;
+import com.go2climb.go2climbapi.application.agencies.domain.persistence.AgencyRepository;
 import com.go2climb.go2climbapi.application.services.domain.model.entity.Service;
 import com.go2climb.go2climbapi.application.services.domain.persistence.ServiceRepository;
 import com.go2climb.go2climbapi.application.services.domain.service.ServiceService;
@@ -47,6 +47,21 @@ public class ServiceServiceImpl implements ServiceService {
     @Override
     public List<Service> getAllByAgencyId(Long agencyId) {
         return serviceRepository.findByAgencyId(agencyId);
+    }
+
+    @Override
+    public List<Service> getAllByIsOffer(int isOffer) {
+        return serviceRepository.findByIsOffer(isOffer);
+    }
+
+    @Override
+    public List<Service> getAllByIsPopular(int isPopular) {
+        return serviceRepository.findByIsPopular(isPopular);
+    }
+
+    @Override
+    public List<Service> getAllByText(String text) {
+        return serviceRepository.findByText(text);
     }
 
     @Override
