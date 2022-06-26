@@ -11,6 +11,8 @@ public interface ServiceService {
 
     List<Service> getAll();
 
+    Service getInfoServiceById(Long serviceId);
+
     List<Service> getAllByAgencyId(Long agencyId);
 
     Page<Service> getAllByAgencyId(Long agencyId, Pageable pageable);

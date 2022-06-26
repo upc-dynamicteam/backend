@@ -17,7 +17,7 @@ public class ServiceResource {
     private float price;
     private float newPrice;
     private String photos;
-    private boolean isOffer;
-    private boolean isPopular;
+    private int isOffer;
+    private int isPopular;
     private AgencyResource agency;
 }

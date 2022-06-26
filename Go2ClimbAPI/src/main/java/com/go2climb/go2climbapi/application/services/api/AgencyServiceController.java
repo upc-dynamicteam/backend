@@ -34,12 +34,14 @@ public class AgencyServiceController {
         return mapper.toResource(serviceService.create(agencyId, mapper.toModel(resource)));
     }
 
+    //funciona
     @PutMapping("{serviceId}")
     public ServiceResource updateService(@PathVariable Long serviceId,
                                          Long agencyId, UpdateServiceResource resource) {
         return mapper.toResource(serviceService.update(agencyId, serviceId, mapper.toModel(resource)));
     }
 
+    //funciona
     @DeleteMapping("{serviceId}")
     public ResponseEntity<?> deleteService(Long agencyId, @PathVariable Long serviceId) {
         return serviceService.delete(agencyId, serviceId);

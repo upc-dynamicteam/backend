@@ -39,6 +39,12 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
+    public Service getInfoServiceById(Long serviceId) {
+        return serviceRepository.findById(serviceId).orElseThrow(() ->
+                new ResourceNotFoundException(ENTITY, serviceId));
+    }
+
+    @Override
     public List<Service> getAllByAgencyId(Long agencyId) {
         return serviceRepository.findByAgencyId(agencyId);
     }
@@ -79,8 +85,8 @@ public class ServiceServiceImpl implements ServiceService {
                         .withPrice(service.getPrice())
                         .withNewPrice(service.getNewPrice())
                         .withPhotos(service.getPhotos())
-                        .withOffer(service.isOffer())
-                        .withPopular(service.isPopular())))
+                        .withIsOffer(service.getIsOffer())
+                        .withIsPopular(service.getIsPopular())))
                 .orElseThrow(() -> new ResourceNotFoundException("Service", serviceId));
     }
 

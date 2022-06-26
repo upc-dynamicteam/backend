@@ -49,9 +49,11 @@ public class Service {
     @NotBlank
     private String photos;
 
-    private boolean isOffer;
+    @NotNull
+    private int isOffer;
 
-    private boolean isPopular;
+    @NotNull
+    private int isPopular;
 
     //Relationships
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

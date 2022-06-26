@@ -31,7 +31,7 @@ public class UpdateServiceResource {
     @NotBlank
     private String photos;
     @NotNull
-    private boolean isOffer;
+    private int isOffer;
     @NotNull
-    private boolean isPopular;
+    private int isPopular;
 }
