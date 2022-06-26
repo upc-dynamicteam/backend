@@ -1,9 +1,5 @@
 package com.go2climb.go2climbapi.application.serviceReviews.mapping;
 
-import com.go2climb.go2climbapi.application.agencyReviews.domain.model.entity.AgencyReview;
-import com.go2climb.go2climbapi.application.agencyReviews.resource.AgencyReviewResource;
-import com.go2climb.go2climbapi.application.agencyReviews.resource.CreateAgencyReviewResource;
-import com.go2climb.go2climbapi.application.agencyReviews.resource.UpdateAgencyReviewResource;
 import com.go2climb.go2climbapi.application.serviceReviews.domain.model.entity.ServiceReview;
 import com.go2climb.go2climbapi.application.serviceReviews.resource.CreateServiceReviewResource;
 import com.go2climb.go2climbapi.application.serviceReviews.resource.ServiceReviewResource;

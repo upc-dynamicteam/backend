@@ -12,13 +12,10 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateHiredServiceResource {
-    @NotBlank
     @NotNull
     private int amount;
-    @NotBlank
     @NotNull
     private Double price;
-    @NotBlank
     @NotNull
     private Date scheduledDate;
     @NotBlank

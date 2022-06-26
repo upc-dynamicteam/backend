@@ -1,10 +1,10 @@
 package com.go2climb.go2climbapi.application.agencyReviews.service;
 
-import com.go2climb.go2climbapi.application.agencies.domain.model.entity.Agency;
 import com.go2climb.go2climbapi.application.agencies.domain.persistence.AgencyRepository;
 import com.go2climb.go2climbapi.application.agencyReviews.domain.model.entity.AgencyReview;
 import com.go2climb.go2climbapi.application.agencyReviews.domain.persistence.AgencyReviewRepository;
 import com.go2climb.go2climbapi.application.agencyReviews.domain.service.AgencyReviewService;
+import com.go2climb.go2climbapi.application.agencies.domain.model.entity.Agency;
 import com.go2climb.go2climbapi.application.tourists.domain.persistence.TouristRepository;
 import com.go2climb.go2climbapi.shared.exception.ResourceNotFoundException;
 import com.go2climb.go2climbapi.shared.exception.ResourceValidationException;
@@ -95,7 +95,8 @@ public class AgencyReviewServiceImpl implements AgencyReviewService {
                         .withProfessionalism(agencyReview.getProfessionalism())
                         .withSecurity(agencyReview.getSecurity())
                         .withQuality(agencyReview.getQuality())
-                        .withCost(agencyReview.getCost())))
+                        .withCost(agencyReview.getCost())
+                        .withDate(agencyReview.getDate())))
                 .orElseThrow(() -> new ResourceNotFoundException("AgencyReview", agencyReviewId));
     }
 

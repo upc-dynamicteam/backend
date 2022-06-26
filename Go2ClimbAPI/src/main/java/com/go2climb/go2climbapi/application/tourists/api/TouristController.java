@@ -1,10 +1,10 @@
 package com.go2climb.go2climbapi.application.tourists.api;
 
 import com.go2climb.go2climbapi.application.tourists.domain.service.TouristService;
-import com.go2climb.go2climbapi.application.tourists.resource.TouristResource;
-import com.go2climb.go2climbapi.application.tourists.resource.UpdateTouristResource;
 import com.go2climb.go2climbapi.application.tourists.mapping.TouristMapper;
 import com.go2climb.go2climbapi.application.tourists.resource.CreateTouristResource;
+import com.go2climb.go2climbapi.application.tourists.resource.TouristResource;
+import com.go2climb.go2climbapi.application.tourists.resource.UpdateTouristResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;

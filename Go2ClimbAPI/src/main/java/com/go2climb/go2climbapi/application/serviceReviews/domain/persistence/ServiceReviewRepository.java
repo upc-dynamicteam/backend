@@ -1,6 +1,5 @@
 package com.go2climb.go2climbapi.application.serviceReviews.domain.persistence;
 
-import com.go2climb.go2climbapi.application.agencyReviews.domain.model.entity.AgencyReview;
 import com.go2climb.go2climbapi.application.serviceReviews.domain.model.entity.ServiceReview;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

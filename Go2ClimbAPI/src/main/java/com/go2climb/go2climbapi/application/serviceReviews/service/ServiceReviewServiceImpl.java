@@ -3,9 +3,9 @@ package com.go2climb.go2climbapi.application.serviceReviews.service;
 import com.go2climb.go2climbapi.application.serviceReviews.domain.model.entity.ServiceReview;
 import com.go2climb.go2climbapi.application.serviceReviews.domain.persistence.ServiceReviewRepository;
 import com.go2climb.go2climbapi.application.serviceReviews.domain.service.ServiceReviewService;
+import com.go2climb.go2climbapi.application.tourists.domain.persistence.TouristRepository;
 import com.go2climb.go2climbapi.application.services.domain.model.entity.Service;
 import com.go2climb.go2climbapi.application.services.domain.persistence.ServiceRepository;
-import com.go2climb.go2climbapi.application.tourists.domain.persistence.TouristRepository;
 import com.go2climb.go2climbapi.shared.exception.ResourceNotFoundException;
 import com.go2climb.go2climbapi.shared.exception.ResourceValidationException;
 import org.springframework.http.ResponseEntity;
@@ -91,7 +91,7 @@ public class ServiceReviewServiceImpl implements ServiceReviewService {
 
         return serviceReviewRepository.findById(serviceReviewId).map(existingServiceReview ->
                         serviceReviewRepository.save(existingServiceReview.withComment(serviceReview.getComment())
-                                .withScore(serviceReview.getScore())))
+                                .withScore(serviceReview.getScore()).withDate(serviceReview.getDate())))
                 .orElseThrow(() -> new ResourceNotFoundException("ServiceReview", serviceReviewId));
     }
 

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -15,8 +16,8 @@ public class CreateAgencyReviewResource {
     @NotBlank
     private String comment;
 
-    /*
-    private Date date;*/
+    @NotNull
+    private Date date;
 
     @NotNull
     private float professionalism;

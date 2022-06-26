@@ -3,6 +3,8 @@ package com.go2climb.go2climbapi.application.services.resource;
 import com.go2climb.go2climbapi.application.agencies.resource.AgencyResource;
 import lombok.*;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @With
@@ -16,6 +18,7 @@ public class ServiceResource {
     private int score;
     private float price;
     private float newPrice;
+    private Date creationDate;
     private String photos;
     private int isOffer;
     private int isPopular;

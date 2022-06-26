@@ -3,28 +3,35 @@ package com.go2climb.go2climbapi.application.hiredServices.service;
 import com.go2climb.go2climbapi.application.hiredServices.domain.model.entity.HiredService;
 import com.go2climb.go2climbapi.application.hiredServices.domain.persistence.HiredServiceRepository;
 import com.go2climb.go2climbapi.application.hiredServices.domain.service.HiredServiceService;
+import com.go2climb.go2climbapi.application.tourists.domain.persistence.TouristRepository;
+import com.go2climb.go2climbapi.application.services.domain.model.entity.Service;
+import com.go2climb.go2climbapi.application.services.domain.persistence.ServiceRepository;
 import com.go2climb.go2climbapi.shared.exception.ResourceNotFoundException;
 import com.go2climb.go2climbapi.shared.exception.ResourceValidationException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
-@Service
+@org.springframework.stereotype.Service
 public class HiredServiceServiceImpl implements HiredServiceService {
     private static final String ENTITY = "HiredService";
 
     private final HiredServiceRepository hiredServiceRepository;
 
+    private final ServiceRepository serviceRepository;
+
+    private final TouristRepository touristRepository;
+
     private final Validator validator;
 
-    public HiredServiceServiceImpl(HiredServiceRepository hiredServiceRepository, Validator validator) {
+    public HiredServiceServiceImpl(HiredServiceRepository hiredServiceRepository, ServiceRepository serviceRepository, TouristRepository touristRepository, Validator validator) {
         this.hiredServiceRepository = hiredServiceRepository;
+        this.serviceRepository = serviceRepository;
+        this.touristRepository = touristRepository;
         this.validator = validator;
     }
 
@@ -34,60 +41,66 @@ public class HiredServiceServiceImpl implements HiredServiceService {
     }
 
     @Override
-    public List<HiredService> getAllByCustomerId(Long customerId) {
-        return null;
-    }
-
-    @Override
-    public Page<HiredService> getAllByCustomerId(Long customerId, Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public List<HiredService> getAllByAgencyId(Long agencyId) {
-        return null;
-    }
-
-    @Override
-    public Page<HiredService> getAllByAgencyId(Long agencyId, Pageable pageable) {
-        return null;
-    }
-
-    @Override
     public HiredService getById(Long hiredServiceId) {
         return hiredServiceRepository.findById(hiredServiceId).orElseThrow(() ->
                 new ResourceNotFoundException(ENTITY, hiredServiceId));
     }
 
     @Override
-    public HiredService create(HiredService hiredService) {
+    public List<HiredService> getAllByServiceId(Long serviceId) {
+        return hiredServiceRepository.findByServiceId(serviceId);
+    }
+
+    @Override
+    public List<HiredService> getAllByTouristId(Long touristId) {
+        return hiredServiceRepository.findByTouristId(touristId);
+    }
+
+    @Override
+    public HiredService create(Long serviceId, Long touristId, HiredService hiredService) {
         Set<ConstraintViolation<HiredService>> violations = validator.validate(hiredService);
 
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
 
-        return hiredServiceRepository.save(hiredService);
+        if(!serviceRepository.existsById(serviceId))
+            throw new ResourceNotFoundException("Service", serviceId);
+
+        Optional<Service> serviceExisting =  serviceRepository.findById(serviceId);
+
+        return touristRepository.findById(touristId).map(tourist -> {
+            hiredService.setService(serviceExisting.get());
+            hiredService.setTourist(tourist);
+            return hiredServiceRepository.save(hiredService);
+        }).orElseThrow(() -> new ResourceNotFoundException("Tourist", touristId));
     }
 
     @Override
-    public HiredService update(Long hiredServiceId, HiredService request) {
-        Set<ConstraintViolation<HiredService>> violations = validator.validate(request);
+    public HiredService update(Long serviceId, Long touristId, Long hiredServiceId, HiredService hiredService) {
+        Set<ConstraintViolation<HiredService>> violations = validator.validate(hiredService);
 
         if (!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
 
-        return hiredServiceRepository.findById(hiredServiceId).map(hiredService ->
-                        hiredServiceRepository.save(hiredService.withAmount(request.getAmount()).withPrice(request.getPrice()).withScheduledDate(request.getScheduledDate()).withStatus(request.getStatus())))
+        if(!serviceRepository.existsById(serviceId))
+            throw new ResourceNotFoundException("Service", serviceId);
+
+        if(!touristRepository.existsById(touristId))
+            throw new ResourceNotFoundException("Tourist", touristId);
+
+        return hiredServiceRepository.findById(hiredServiceId).map(existingHiredService ->
+                        hiredServiceRepository.save(existingHiredService.withAmount(hiredService.getAmount())
+                                .withPrice(hiredService.getPrice())
+                                .withScheduledDate(hiredService.getScheduledDate())
+                                .withStatus(hiredService.getStatus())))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, hiredServiceId));
     }
 
     @Override
-    public ResponseEntity<?> delete(Long hiredServiceId) {
-        return hiredServiceRepository.findById(hiredServiceId).map(
-                hiredService -> {
-                    hiredServiceRepository.delete(hiredService);
-                    return ResponseEntity.ok().build();
-                }
-        ).orElseThrow(() -> new ResourceNotFoundException(ENTITY, hiredServiceId));
+    public ResponseEntity<?> delete(Long serviceId, Long touristId, Long hiredServiceId) {
+        return hiredServiceRepository.findByIdAndServiceIdAndTouristId(hiredServiceId, serviceId, touristId).map(hiredService -> {
+            hiredServiceRepository.delete(hiredService);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, hiredServiceId));
     }
 }

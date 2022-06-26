@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -40,9 +41,8 @@ public class Service {
     @NotNull
     private float newPrice;
 
-    /*
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date creationDate; */
+    @NotNull
+    private Date creationDate;
 
     @NotNull
     @NotBlank

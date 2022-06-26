@@ -1,7 +1,7 @@
 package com.go2climb.go2climbapi.application.tourists.mapping;
 
-import com.go2climb.go2climbapi.application.tourists.domain.model.entity.Tourist;
 import com.go2climb.go2climbapi.application.tourists.resource.CreateTouristResource;
+import com.go2climb.go2climbapi.application.tourists.domain.model.entity.Tourist;
 import com.go2climb.go2climbapi.application.tourists.resource.TouristResource;
 import com.go2climb.go2climbapi.application.tourists.resource.UpdateTouristResource;
 import com.go2climb.go2climbapi.shared.mapping.EnhancedModelMapper;

@@ -4,8 +4,17 @@ import com.go2climb.go2climbapi.application.hiredServices.domain.model.entity.Hi
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface HiredServiceRepository extends JpaRepository<HiredService, Long> {
+
+    List<HiredService> findByServiceId(Long serviceId);
+
+    List<HiredService> findByTouristId(Long touristId);
+
+    Optional<HiredService> findByIdAndServiceIdAndTouristId(Long id, Long serviceId, Long touristId);
 
     /*
     List<HiredService> findByCustomerId (Long customerId);
@@ -13,15 +22,7 @@ public interface HiredServiceRepository extends JpaRepository<HiredService, Long
 
     List<HiredService> findByAgencyId (Long agencyId);
     Page<HiredService> findByAgencyId (Long agencyId, Pageable pageable);
-     */
 
-    /*
-    HiredService Add(HiredService hiredService);
-    void Update(HiredService hiredService);
-    void Remove(HiredService hiredService);
-     */
-
-    /*
     Optional<HiredService> findByIdAndCustomerId (Long id, Long customerId);
      */
 }

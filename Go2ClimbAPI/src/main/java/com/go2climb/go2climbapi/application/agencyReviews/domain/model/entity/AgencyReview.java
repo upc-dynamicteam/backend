@@ -21,8 +21,8 @@ public class AgencyReview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /*
-    private Date date;*/
+    @NotNull
+    private Date date;
 
     @NotNull
     @NotBlank

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -27,6 +28,8 @@ public class UpdateServiceResource {
     private float price;
     @NotNull
     private float newPrice;
+    @NotNull
+    private Date creationDate;
     @NotNull
     @NotBlank
     private String photos;

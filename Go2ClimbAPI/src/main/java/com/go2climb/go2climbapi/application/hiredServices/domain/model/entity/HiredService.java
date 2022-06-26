@@ -1,5 +1,7 @@
 package com.go2climb.go2climbapi.application.hiredServices.domain.model.entity;
 
+import com.go2climb.go2climbapi.application.tourists.domain.model.entity.Tourist;
+import com.go2climb.go2climbapi.application.services.domain.model.entity.Service;
 import com.go2climb.go2climbapi.shared.domain.model.AuditModel;
 import lombok.*;
 
@@ -21,27 +23,24 @@ public class HiredService extends AuditModel {
     private Long id;
 
     @NotNull
-    @NotBlank
     private int amount;
 
     @NotNull
-    @NotBlank
     private Double price;
 
     @NotNull
-    @NotBlank
     private Date scheduledDate;
 
+    @NotNull
+    @NotBlank
     private String status;
 
     //Relationships
-    /*
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    @JoinColumn(name = "tourist_id", nullable = false)
+    private Tourist tourist;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "service_id", nullable = false)
     private Service service;
-    */
 }

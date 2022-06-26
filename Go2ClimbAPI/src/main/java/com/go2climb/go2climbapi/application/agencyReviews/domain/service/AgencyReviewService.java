@@ -1,7 +1,6 @@
 package com.go2climb.go2climbapi.application.agencyReviews.domain.service;
 
 import com.go2climb.go2climbapi.application.agencyReviews.domain.model.entity.AgencyReview;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

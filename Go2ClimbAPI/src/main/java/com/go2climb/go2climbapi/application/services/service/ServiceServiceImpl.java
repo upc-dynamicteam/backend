@@ -101,7 +101,8 @@ public class ServiceServiceImpl implements ServiceService {
                         .withNewPrice(service.getNewPrice())
                         .withPhotos(service.getPhotos())
                         .withIsOffer(service.getIsOffer())
-                        .withIsPopular(service.getIsPopular())))
+                        .withIsPopular(service.getIsPopular())
+                        .withCreationDate(service.getCreationDate())))
                 .orElseThrow(() -> new ResourceNotFoundException("Service", serviceId));
     }
 

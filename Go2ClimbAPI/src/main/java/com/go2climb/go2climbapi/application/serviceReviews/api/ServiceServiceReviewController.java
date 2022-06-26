@@ -46,5 +46,4 @@ public class ServiceServiceReviewController {
                                                 @PathVariable Long serviceId) {
         return serviceReviewService.delete(serviceId, touristId, serviceReviewId);
     }
-
 }
