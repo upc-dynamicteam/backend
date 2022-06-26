@@ -17,7 +17,6 @@ public class AgencyMapper implements Serializable {
     @Autowired
     EnhancedModelMapper mapper;
 
-
     public AgencyResource toResource(Agency model) { return mapper.map(model, AgencyResource.class); }
 
     public Agency toModel(CreateAgencyResource resource) { return mapper.map(resource, Agency.class); }
