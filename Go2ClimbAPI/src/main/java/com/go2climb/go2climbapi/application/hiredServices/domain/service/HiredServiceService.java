@@ -17,6 +17,7 @@ public interface HiredServiceService {
 
     HiredService create (Long serviceId, Long touristId, HiredService hiredService);
     HiredService update(Long serviceId, Long touristId, Long hiredServiceId, HiredService hiredService);
+    //HiredService patch(Long serviceId, Long touristId, Long hiredServiceId, HiredService hiredService);
     ResponseEntity<?> delete(Long serviceId, Long touristId, Long hiredServiceId);
 
 }

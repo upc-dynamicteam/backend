@@ -4,6 +4,7 @@ import com.go2climb.go2climbapi.application.hiredServices.domain.service.HiredSe
 import com.go2climb.go2climbapi.application.hiredServices.mapping.HiredServiceMapper;
 import com.go2climb.go2climbapi.application.hiredServices.resource.CreateHiredServiceResource;
 import com.go2climb.go2climbapi.application.hiredServices.resource.HiredServiceResource;
+import com.go2climb.go2climbapi.application.hiredServices.resource.PatchHiredServiceResource;
 import com.go2climb.go2climbapi.application.hiredServices.resource.UpdateHiredServiceResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,6 +40,13 @@ public class ServiceHiredServiceController {
                                                      @PathVariable Long serviceId, @RequestBody UpdateHiredServiceResource resource) {
         return mapper.toResource(hiredServiceService.update(serviceId, touristId, hiredServiceId, mapper.toModel(resource)));
     }
+
+    /*
+    @PatchMapping("touristId={touristId}/{hiredServiceId}")
+    public HiredServiceResource patchHiredService(@PathVariable Long hiredServiceId, @PathVariable Long touristId,
+                                                  @PathVariable Long serviceId, @RequestBody PatchHiredServiceResource resource) {
+        return mapper.toResource(hiredServiceService.patch(serviceId, touristId, hiredServiceId, mapper.toModel(resource)));
+    }*/
 
     @DeleteMapping("touristId={touristId}/{hiredServiceId}")
     public ResponseEntity<?> deleteHiredService(@PathVariable Long hiredServiceId, @PathVariable Long touristId,

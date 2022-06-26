@@ -96,6 +96,28 @@ public class HiredServiceServiceImpl implements HiredServiceService {
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, hiredServiceId));
     }
 
+    /*
+    @Override
+    public HiredService patch(Long serviceId, Long touristId, Long hiredServiceId, HiredService hiredService) {
+        Set<ConstraintViolation<HiredService>> violations = validator.validate(hiredService);
+
+        if (!violations.isEmpty())
+            throw new ResourceValidationException(ENTITY, violations);
+
+        if(!serviceRepository.existsById(serviceId))
+            throw new ResourceNotFoundException("Service", serviceId);
+
+        if(!touristRepository.existsById(touristId))
+            throw new ResourceNotFoundException("Tourist", touristId);
+
+        return hiredServiceRepository.findById(hiredServiceId).map(existingHiredService ->
+                        hiredServiceRepository.save(existingHiredService.withAmount(hiredService.getAmount())
+                                .withPrice(hiredService.getPrice())
+                                .withScheduledDate(hiredService.getScheduledDate())
+                                .withStatus(hiredService.getStatus())))
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, hiredServiceId));
+    }*/
+
     @Override
     public ResponseEntity<?> delete(Long serviceId, Long touristId, Long hiredServiceId) {
         return hiredServiceRepository.findByIdAndServiceIdAndTouristId(hiredServiceId, serviceId, touristId).map(hiredService -> {
