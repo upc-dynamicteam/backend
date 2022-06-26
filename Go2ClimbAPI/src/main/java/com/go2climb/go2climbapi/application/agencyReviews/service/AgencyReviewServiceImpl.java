@@ -70,12 +70,6 @@ public class AgencyReviewServiceImpl implements AgencyReviewService {
 
         Optional<Agency> agencyExisting =  agencyRepository.findById(agencyId);
 
-        /*
-        agencyRepository.findById(agencyId).map(agency -> {
-            agencyReview.setAgency(agency);
-            return agencyReview;
-        }).orElseThrow(() -> new ResourceNotFoundException("Agency", agencyId));*/
-
         return touristRepository.findById(touristId).map(tourist -> {
             agencyReview.setAgency(agencyExisting.get());
             agencyReview.setTourist(tourist);
