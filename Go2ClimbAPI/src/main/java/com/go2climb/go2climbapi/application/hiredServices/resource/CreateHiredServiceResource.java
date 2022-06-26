@@ -17,7 +17,8 @@ public class CreateHiredServiceResource {
     @NotNull
     private Double price;
     @NotNull
-    private Date scheduledDate;
+    @NotBlank
+    private String scheduledDate;
     @NotBlank
     @NotNull
     private String status;

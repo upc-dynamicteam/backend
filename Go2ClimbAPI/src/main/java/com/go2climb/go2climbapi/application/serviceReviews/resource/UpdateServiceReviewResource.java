@@ -18,7 +18,8 @@ public class UpdateServiceReviewResource {
     private String comment;
 
     @NotNull
-    private Date date;
+    @NotBlank
+    private String date;
 
     @NotNull
     private float score;

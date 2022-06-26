@@ -18,7 +18,7 @@ public class ServiceResource {
     private int score;
     private float price;
     private float newPrice;
-    private Date creationDate;
+    private String creationDate;
     private String photos;
     private int isOffer;
     private int isPopular;

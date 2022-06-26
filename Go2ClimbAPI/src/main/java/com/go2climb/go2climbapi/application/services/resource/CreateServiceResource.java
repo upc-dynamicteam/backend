@@ -28,7 +28,8 @@ public class CreateServiceResource {
     @NotNull
     private float newPrice;
     @NotNull
-    private Date creationDate;
+    @NotBlank
+    private String creationDate;
     @NotNull
     @NotBlank
     private String photos;

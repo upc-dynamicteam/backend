@@ -22,7 +22,8 @@ public class ServiceReview {
     private Long id;
 
     @NotNull
-    private Date date;
+    @NotBlank
+    private String date;
 
     @NotNull
     @NotBlank

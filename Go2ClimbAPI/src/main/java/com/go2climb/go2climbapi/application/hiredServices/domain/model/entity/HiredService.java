@@ -29,7 +29,8 @@ public class HiredService extends AuditModel {
     private Double price;
 
     @NotNull
-    private Date scheduledDate;
+    @NotBlank
+    private String scheduledDate;
 
     @NotNull
     @NotBlank

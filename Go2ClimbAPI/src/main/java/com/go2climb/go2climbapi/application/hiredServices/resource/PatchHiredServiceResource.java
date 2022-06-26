@@ -12,6 +12,6 @@ import java.util.Date;
 public class PatchHiredServiceResource {
     private int amount;
     private Double price;
-    private Date scheduledDate;
+    private String scheduledDate;
     private String status;
 }

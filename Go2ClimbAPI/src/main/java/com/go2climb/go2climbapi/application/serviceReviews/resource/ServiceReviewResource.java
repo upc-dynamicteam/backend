@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class ServiceReviewResource {
     private Long id;
-    private Date date;
+    private String date;
     private String comment;
     private float score;
     private ServiceResource service;

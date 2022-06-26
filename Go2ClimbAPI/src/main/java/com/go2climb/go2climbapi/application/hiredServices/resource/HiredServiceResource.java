@@ -15,7 +15,7 @@ public class HiredServiceResource {
     private Long id;
     private int amount;
     private Double price;
-    private Date scheduledDate;
+    private String scheduledDate;
     private String status;
 
     //Relationships

@@ -18,7 +18,8 @@ public class UpdateAgencyReviewResource {
     private String comment;
 
     @NotNull
-    private Date date;
+    @NotBlank
+    private String date;
 
     @NotNull
     private float professionalism;

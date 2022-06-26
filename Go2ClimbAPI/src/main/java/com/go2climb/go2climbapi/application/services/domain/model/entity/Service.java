@@ -42,7 +42,8 @@ public class Service {
     private float newPrice;
 
     @NotNull
-    private Date creationDate;
+    @NotBlank
+    private String creationDate;
 
     @NotNull
     @NotBlank
