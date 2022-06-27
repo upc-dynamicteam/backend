@@ -6,6 +6,8 @@ import com.go2climb.go2climbapi.application.hiredServices.mapping.HiredServiceMa
 import com.go2climb.go2climbapi.application.serviceReviews.mapping.ServiceReviewMapper;
 import com.go2climb.go2climbapi.application.services.mapping.ServiceMapper;
 import com.go2climb.go2climbapi.application.tourists.mapping.TouristMapper;
+import com.go2climb.go2climbapi.application.user.mapping.UserMapper;
+import com.go2climb.go2climbapi.security.mapping.RoleMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,4 +25,10 @@ public class MappingConfiguration {
     public AgencyReviewMapper agencyReviewMapper() { return new AgencyReviewMapper(); }
     @Bean
     public ServiceReviewMapper serviceReviewMapper() { return new ServiceReviewMapper(); }
+    @Bean
+    public UserMapper UserMapper() { return new UserMapper(); }
+    @Bean
+    public RoleMapper roleMapper() {
+        return new RoleMapper();
+    }
 }
