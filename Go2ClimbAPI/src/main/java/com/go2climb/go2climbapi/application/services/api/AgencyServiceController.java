@@ -64,7 +64,7 @@ public class AgencyServiceController {
     })
     @PutMapping("{serviceId}")
     public ServiceResource updateService(@PathVariable Long serviceId,
-                                         @PathVariable Long agencyId, UpdateServiceResource resource) {
+                                         @PathVariable Long agencyId, @RequestBody UpdateServiceResource resource) {
         return mapper.toResource(serviceService.update(agencyId, serviceId, mapper.toModel(resource)));
     }
 
