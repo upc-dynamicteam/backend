@@ -1,6 +1,7 @@
 package com.go2climb.go2climbapi.security.middleware;
 
-import com.go2climb.go2climbapi.application.user.domain.service.UserService;
+
+import com.go2climb.go2climbapi.security.domain.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +19,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
-public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     UserService userService;
 
@@ -26,10 +28,9 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
     JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Bean
-    public JwtAuthorizationFilter authorizationFilter() {
+    public JwtAuthorizationFilter authorizationFilter(){
         return new JwtAuthorizationFilter();
     }
-
 
     @Override
     public void configure(AuthenticationManagerBuilder builder) throws Exception {
@@ -43,21 +44,29 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-
+    protected  void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/v1/users/auth/*", "/swagger-ui/**", "/api-docs/**").permitAll()
+                .authorizeRequests().antMatchers("/api/v1/users/auth/*", "/swagger-ui/*",
+                                                    "/api-docs/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authorizationFilter(), UsernamePasswordAuthenticationFilter.class);
-
     }
+
+
+
+
+
+
+
+
+
 }

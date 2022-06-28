@@ -1,8 +1,8 @@
 package com.go2climb.go2climbapi.security.mapping;
 
 import com.go2climb.go2climbapi.security.domain.model.entity.Role;
-import com.go2climb.go2climbapi.security.domain.model.enumeration.Roles;
-import com.go2climb.go2climbapi.security.resource.RoleResource;
+import com.go2climb.go2climbapi.security.domain.model.entity.User;
+import com.go2climb.go2climbapi.security.resource.UserResource;
 import com.go2climb.go2climbapi.shared.mapping.EnhancedModelMapper;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.Converter;
@@ -14,27 +14,25 @@ import org.springframework.data.domain.Pageable;
 import java.io.Serializable;
 import java.util.List;
 
-public class RoleMapper implements Serializable {
-
+public class UserMapper implements Serializable {
     @Autowired
     EnhancedModelMapper mapper;
 
-    Converter<Roles, String> roleToString = new AbstractConverter<>() {
+    Converter<Role, String> roleToString = new AbstractConverter<>() {
         @Override
-        protected String convert(Roles role) {
-            return role == null ? null : role.name();
+        protected String convert(Role role) {
+            return role == null ? null : role.getName().name();
         }
     };
 
-    public RoleResource toResource(Role model){
+    public UserResource toResource(User model){
         mapper.addConverter(roleToString);
-        return mapper.map(model, RoleResource.class);
+        return mapper.map(model, UserResource.class);
     }
 
-    public Page<RoleResource> modelListToPage(List<Role> modelList, Pageable pageable){
-        return  new PageImpl<>(mapper.mapList(modelList, RoleResource.class),
+    public Page<UserResource> modelListToPage(List<User> modelList, Pageable pageable){
+        return  new PageImpl<>(mapper.mapList(modelList, UserResource.class),
                 pageable, modelList.size());
     }
-
 
 }

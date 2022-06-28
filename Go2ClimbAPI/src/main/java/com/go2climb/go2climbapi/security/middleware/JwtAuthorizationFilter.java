@@ -1,6 +1,6 @@
 package com.go2climb.go2climbapi.security.middleware;
 
-import com.go2climb.go2climbapi.application.user.service.UserServiceImpl;
+import com.go2climb.go2climbapi.security.service.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
+
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
 
     @Autowired
@@ -28,46 +29,32 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Autowired
     private UserServiceImpl userService;
 
-    private String parseTokenFrom(HttpServletRequest request) {
 
+    private String parseTokenFrom(HttpServletRequest request){
         String authorizationHeader = request.getHeader("Authorization");
-
         if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith("Bearer")) {
-
             return new LinkedList<>(Arrays.asList(authorizationHeader.split(" "))).getLast();
-
         }
-
         return null;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
+    protected  void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+                                    throws ServletException, IOException {
         try {
-            String token = parseTokenFrom(request);
-            if (token != null && handler.validateToken(token)) {
-
-                logger.info("Token: {}", token);
-
-                String username = handler.getUsernameFrom(token);
-
-                UserDetails principal = userService.loadUserByUsername(username);
-
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        principal, null, principal.getAuthorities());
-
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-
-            }
+                String token = parseTokenFrom(request);
+                if  (token != null && handler.validateToken(token)){
+                    logger.info("Token: {}", token);
+                    String username = handler.getUsernameFrom(token);
+                    UserDetails principal = userService.loadUserByUsername(username);
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                            principal, null, principal.getAuthorities());
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
         } catch (Exception e) {
-
             logger.error("User Authentication cannot be set: {}", e.getMessage());
-
         }
-
         filterChain.doFilter(request, response);
     }
 }

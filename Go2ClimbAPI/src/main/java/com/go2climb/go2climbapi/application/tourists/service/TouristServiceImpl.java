@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class TouristServiceIn implements TouristService {
+public class TouristServiceImpl implements TouristService {
     private static final String ENTITY = "Tourist";
 
     private final TouristRepository touristRepository;
 
     private final Validator validator;
 
-    public TouristServiceIn(TouristRepository touristRepository, Validator validador) {
+    public TouristServiceImpl(TouristRepository touristRepository, Validator validador) {
         this.touristRepository = touristRepository;
         this.validator = validador;
     }

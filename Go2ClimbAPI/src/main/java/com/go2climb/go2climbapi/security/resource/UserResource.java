@@ -9,10 +9,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @With
-public class AuthenticateResource {
+public class UserResource {
     private Long id;
     private String username;
     private String email;
-    private List<String> roles;
-    private String token;
+    private List<RoleResource> roles;
 }

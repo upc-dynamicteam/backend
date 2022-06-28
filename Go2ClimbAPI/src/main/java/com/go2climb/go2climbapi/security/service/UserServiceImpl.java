@@ -1,8 +1,11 @@
-package com.go2climb.go2climbapi.application.user.service;
+package com.go2climb.go2climbapi.security.service;
 
 import com.go2climb.go2climbapi.security.domain.model.entity.Role;
+import com.go2climb.go2climbapi.security.domain.model.entity.User;
 import com.go2climb.go2climbapi.security.domain.model.enumeration.Roles;
 import com.go2climb.go2climbapi.security.domain.persistence.RoleRepository;
+import com.go2climb.go2climbapi.security.domain.persistence.UserRepository;
+import com.go2climb.go2climbapi.security.domain.service.UserService;
 import com.go2climb.go2climbapi.security.domain.service.communication.AuthenticateRequest;
 import com.go2climb.go2climbapi.security.domain.service.communication.AuthenticateResponse;
 import com.go2climb.go2climbapi.security.domain.service.communication.RegisterRequest;
@@ -10,12 +13,8 @@ import com.go2climb.go2climbapi.security.domain.service.communication.RegisterRe
 import com.go2climb.go2climbapi.security.middleware.JwtHandler;
 import com.go2climb.go2climbapi.security.middleware.UserDetailsImpl;
 import com.go2climb.go2climbapi.security.resource.AuthenticateResource;
-import com.go2climb.go2climbapi.shared.exception.ResourceNotFoundException;
+import com.go2climb.go2climbapi.security.resource.UserResource;
 import com.go2climb.go2climbapi.shared.mapping.EnhancedModelMapper;
-import com.go2climb.go2climbapi.application.user.domain.model.entity.User;
-import com.go2climb.go2climbapi.application.user.domain.persistence.UserRepository;
-import com.go2climb.go2climbapi.application.user.domain.service.UserService;
-import com.go2climb.go2climbapi.application.user.resource.UserResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +34,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.hibernate.usertype.DynamicParameterizedType.ENTITY;
-
 @Service
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -51,45 +48,36 @@ public class UserServiceImpl implements UserService {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    JwtHandler handler;
+    PasswordEncoder encoder;
 
     @Autowired
-    PasswordEncoder encoder;
+    JwtHandler handler;
 
     @Autowired
     EnhancedModelMapper mapper;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("User not found with username: %s", email)));
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format(
+                        "User not found with username: %s", username)));
         return UserDetailsImpl.build(user);
     }
 
     @Override
-    public List<User> getAll() {
-        return userRepository.findAll();
-    }
-
-    @Override
-    public User getById(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(()-> new ResourceNotFoundException(ENTITY,userId)) ;
-    }
-
-    @Override
-    public ResponseEntity<?> authenticate(AuthenticateRequest request)
-    {
+    public ResponseEntity<?> authenticate(AuthenticateRequest request){
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            request.getEmail(), request.getPassword()
+                            request.getUsername(), request.getPassword()
                     ));
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String token = handler.generateToken(authentication);
 
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            UserDetailsImpl userDetails = (UserDetailsImpl)  authentication.getPrincipal();
+
             List<String> roles = userDetails.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
@@ -99,59 +87,78 @@ public class UserServiceImpl implements UserService {
             resource.setToken(token);
 
             AuthenticateResponse response = new AuthenticateResponse(resource);
-
             return ResponseEntity.ok(response.getResource());
 
-
-        } catch (Exception e) {
-            AuthenticateResponse response = new AuthenticateResponse(String.format("An error occurred while authenticating: %s", e.getMessage()));
-            return ResponseEntity.badRequest().body(response.getMessage());
+        }catch (Exception e){
+            AuthenticateResponse response = new AuthenticateResponse(String.format(
+                    "An error occurred while authenticating: %s", e.getMessage()));
+            return  ResponseEntity.badRequest().body(response.getMessage());
         }
     }
 
     @Override
-    public ResponseEntity<?> register(RegisterRequest request)
-    {
-        if (userRepository.existsByEmail(request.getEmail())) {
-            AuthenticateResponse response = new AuthenticateResponse("Email is already used.");
-            return ResponseEntity.badRequest()
-                    .body(response.getMessage());
+    public ResponseEntity<?> register(RegisterRequest request){
+
+        if (userRepository.existsByUsername(request.getUsername())){
+            AuthenticateResponse response = new AuthenticateResponse("Username is already used.");
+            return  ResponseEntity.badRequest().body(response.getMessage());
         }
 
-        try {
+        if (userRepository.existsByEmail(request.getEmail())){
+            AuthenticateResponse response = new AuthenticateResponse("Email is already used.");
+            return  ResponseEntity.badRequest().body(response.getMessage());
+        }
 
-            Set<String> rolesStringSet = request.getRoles();
-            Set<Role> roles = new HashSet<>();
+        try{
 
-            if (rolesStringSet == null) {
-                roleRepository.findByName(Roles.ROLE_CLIENT)
+            Set<String> roleStringSet = request.getRoles();
+            Set<Role> roles =  new HashSet<>();
+
+            if (roleStringSet == null){
+                roleRepository.findByName(Roles.ROLE_USER)
                         .map(roles::add)
                         .orElseThrow(() -> new RuntimeException("Role not found."));
             } else {
-                rolesStringSet.forEach(roleString ->
-                        roleRepository.findByName(Roles.valueOf(roleString))
-                                .map(roles::add)
-                                .orElseThrow(() -> new RuntimeException("Role not found.")));
+                roleStringSet.forEach(roleString -> roleRepository.findByName(Roles.valueOf(roleString))
+                        .map(roles:: add)
+                        .orElseThrow(() -> new RuntimeException("Roles not found")));
             }
 
             logger.info("Roles: {}", roles);
 
             User user = new User()
+                    .withUsername(request.getUsername())
                     .withEmail(request.getEmail())
                     .withPassword(encoder.encode(request.getPassword()))
                     .withRoles(roles);
-
 
             userRepository.save(user);
             UserResource resource = mapper.map(user, UserResource.class);
             RegisterResponse response = new RegisterResponse(resource);
             return ResponseEntity.ok(response.getResource());
-
         } catch (Exception e) {
 
             RegisterResponse response = new RegisterResponse(e.getMessage());
             return ResponseEntity.badRequest().body(response.getMessage());
-
         }
     }
+
+
+    public List<User> getAll(){
+        return userRepository.findAll();
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

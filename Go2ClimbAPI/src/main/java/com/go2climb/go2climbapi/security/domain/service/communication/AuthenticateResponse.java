@@ -4,11 +4,12 @@ import com.go2climb.go2climbapi.security.resource.AuthenticateResource;
 import com.go2climb.go2climbapi.shared.domain.service.communication.BaseResponse;
 
 public class AuthenticateResponse extends BaseResponse<AuthenticateResource> {
-    public AuthenticateResponse(String message) {
+
+    public AuthenticateResponse(String message){
         super(message);
     }
 
-    public AuthenticateResponse(AuthenticateResource resource) {
+    public AuthenticateResponse(AuthenticateResource resource){
         super(resource);
     }
 }

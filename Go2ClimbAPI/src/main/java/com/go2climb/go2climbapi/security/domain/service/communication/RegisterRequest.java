@@ -11,8 +11,13 @@ import java.util.Set;
 @Getter
 @Setter
 public class RegisterRequest {
-    @NotNull
+
     @NotBlank
+    @NotNull
+    private String username;
+
+    @NotBlank
+    @NotNull
     @Email
     private String email;
 

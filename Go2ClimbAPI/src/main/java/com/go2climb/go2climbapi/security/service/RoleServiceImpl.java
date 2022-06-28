@@ -12,24 +12,24 @@ import java.util.List;
 
 @Service
 public class RoleServiceImpl implements RoleService {
+
     @Autowired
     private RoleRepository roleRepository;
 
-    private static String[] DEFAULT_ROLES = {"ROLE_CLIENT", "ROLE_EMPLOYEE"};
+    private static String[] DEFAULT_ROLES = {"ROLE_USER", "ROLE_TOURIST", "ROLES_AGENCY"};
 
     @Override
-    public void seed() {
-        Arrays.stream(DEFAULT_ROLES).forEach(name -> {
-            Roles roleName = Roles.valueOf(name);
-            if(!roleRepository.existsByName(roleName)) {
-                roleRepository.save((new Role()).withName(roleName));
-            }
-        } );
-
+    public void seed(){
+        Arrays.stream(DEFAULT_ROLES).forEach(
+                name ->{ Roles roleName = Roles.valueOf(name);
+                         if (!roleRepository.existsByName(roleName)){
+                            roleRepository.save((new Role()).withName(roleName));}
+                        }
+                        );
     }
 
     @Override
-    public List<Role> getAll() {
+    public List<Role> getAll(){
         return roleRepository.findAll();
     }
 }

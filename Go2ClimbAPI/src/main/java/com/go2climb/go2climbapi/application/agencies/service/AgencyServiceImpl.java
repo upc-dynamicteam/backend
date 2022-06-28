@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class AgencyServiceIn implements AgencyService {
+public class AgencyServiceImpl implements AgencyService {
     private static final String ENTITY = "Agency";
 
     private final AgencyRepository agencyRepository;
 
     private final Validator validator;
 
-    public AgencyServiceIn(AgencyRepository agencyRepository, Validator validator) {
+    public AgencyServiceImpl(AgencyRepository agencyRepository, Validator validator) {
         this.agencyRepository = agencyRepository;
         this.validator = validator;
     }
